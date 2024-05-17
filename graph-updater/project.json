@@ -1,0 +1,56 @@
+{
+  "name": "graph-updater",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "graph-updater/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/graph-updater",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "graph-updater/src/main.ts",
+        "tsConfig": "graph-updater/tsconfig.app.json",
+        "assets": ["graph-updater/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "graph-updater:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "graph-updater:build:development"
+        },
+        "production": {
+          "buildTarget": "graph-updater:build:production"
+        }
+      }
+    }
+  }
+}

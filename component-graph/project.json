@@ -1,0 +1,56 @@
+{
+  "name": "component-graph",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "component-graph/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/component-graph",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "component-graph/src/main.ts",
+        "tsConfig": "component-graph/tsconfig.app.json",
+        "assets": ["component-graph/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "component-graph:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "component-graph:build:development"
+        },
+        "production": {
+          "buildTarget": "component-graph:build:production"
+        }
+      }
+    }
+  }
+}

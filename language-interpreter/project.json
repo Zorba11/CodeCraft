@@ -1,0 +1,56 @@
+{
+  "name": "language-interpreter",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "language-interpreter/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/language-interpreter",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "language-interpreter/src/main.ts",
+        "tsConfig": "language-interpreter/tsconfig.app.json",
+        "assets": ["language-interpreter/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "language-interpreter:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "language-interpreter:build:development"
+        },
+        "production": {
+          "buildTarget": "language-interpreter:build:production"
+        }
+      }
+    }
+  }
+}

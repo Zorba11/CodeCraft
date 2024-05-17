@@ -1,0 +1,56 @@
+{
+  "name": "code-editor",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "code-editor/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/code-editor",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "code-editor/src/main.ts",
+        "tsConfig": "code-editor/tsconfig.app.json",
+        "assets": ["code-editor/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "code-editor:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "code-editor:build:development"
+        },
+        "production": {
+          "buildTarget": "code-editor:build:production"
+        }
+      }
+    }
+  }
+}
